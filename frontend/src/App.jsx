@@ -21,6 +21,7 @@ function App() {
             console.log('No Change');
             return;
         }
+
         if(res.draggableId.includes('head') && res.destination.droppableId !== 'AudioBoard'){
             console.log("Segment can't be moved to the library altogether");
             return;

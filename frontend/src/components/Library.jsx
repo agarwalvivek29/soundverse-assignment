@@ -10,8 +10,8 @@ export function Library(){
     return(
         <Droppable droppableId="library">
             {(provided)=>(
-                <div {...provided.droppableProps} ref={provided.innerRef}>
-                    <div className="w-[50vw] max-w-[50vw] border-r border-gray-700">
+                <div {...provided.droppableProps} ref={provided.innerRef} className="m-4">
+                    <div className="w-[45vw] max-w-[45vw]">
                         <div className="text-2xl p-3 text-white">Library</div>
                         {Array.isArray(library) && library.map((ele,index)=>{
                             return(

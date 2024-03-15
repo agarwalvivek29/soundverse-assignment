@@ -1,13 +1,15 @@
 import { useRecoilValue } from "recoil";
 import Icons from "./Icons";
 import { collaboratorsAtom } from "../store/recoilStore";
+import image from './../assets/image.png'
+import random from './../assets/react.svg'
 
 function NavBar(){
     return(
-        <div className="absolute w-screen bg-black text-white h-[107px]   border-b flex justify-between items-center">
+        <div className="absolute w-screen bg-black text-white h-[107px]   border-b border-[#252525] flex justify-between items-center">
             <div>
-                <div className="text-xl p-3">
-                    Logo
+                <div className=" w-[225px] h-[74px] ml-5 p-2">
+                    <img src={image} className=""/>
                 </div>
             </div>
             <div className="flex items-center">
@@ -15,7 +17,7 @@ function NavBar(){
                 <button className="border rounded-[17px] w-[144px] h-[67px] text-xl m-2">Share</button>
                 <button className="border rounded-[17px] w-[144px] h-[67px] text-xl  m-2">Export</button>
                 <div>
-                    <img src={{}} className="w-[47px] h-[47px] rounded-full m-3"/>
+                    <img src={random} className="w-[47px] h-[47px] rounded-full m-3"/>
                 </div>
             </div>
         </div>

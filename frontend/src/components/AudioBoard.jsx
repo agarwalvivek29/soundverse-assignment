@@ -1,20 +1,22 @@
-import { useRecoilState, useRecoilValue } from "recoil"
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil"
 import { audioBoardAtom, nowPlayingAtom } from "../store/recoilStore"
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Icons from "./Icons";
 import { Draggable, Droppable } from "react-beautiful-dnd";
 import H5AudioPlayer from "react-h5-audio-player";
+import './../../node_modules/react-h5-audio-player/lib/styles.css';
+import { SocketContext } from "../store/SocketContext";
 
 export function AudioBoard(){
     const [audios,setAudios] = useRecoilState(audioBoardAtom);
     const nowPlaying = useRecoilValue(nowPlayingAtom);
 
     return(
-        <div>
+        <div className="w-full bg-[#000000] flex flex-col h-full">
             <Droppable droppableId="AudioBoard" type="group">
                 {(provided)=>(
-                    <div className="flex overflow-x-auto" {...provided.droppableProps} ref={provided.innerRef}>
-                            <div className="h-max-fit overflow-y-auto w-max-[50vw] w-[50vw] overflow-x-auto flex p-4">
+                    <div className="flex overflow-x-auto " {...provided.droppableProps} ref={provided.innerRef}>
+                            <div className="max-h-[78vh] h-[78vh] overflow-y-auto overflow-y-auto w-max-full w-full overflow-x-auto flex p-4">
                             {
                                 Array.isArray(audios) && audios.map((segment, index)=>{
                                     console.log(segment);
@@ -26,15 +28,18 @@ export function AudioBoard(){
                                                 </div>
                                             )}
                                         </Draggable>
+                                        
                                     )
                                 })
                             }
+                            <AddSegment />
                         </div>
                         {provided.placeholder}
                     </div>
                 )}
             </Droppable>
-            <H5AudioPlayer src={nowPlaying.link} className="flex text-white" showFilledProgress='true'/>
+            <div className=" flex flex-grow"></div>
+            <div className=""><H5AudioPlayer style={{backgroundColor : "black"}} src={nowPlaying ? nowPlaying.link : ''} className="bottom-0 flex text-whites" showFilledProgress='true'/></div>
         </div>
     )
 }
@@ -131,7 +136,7 @@ export function AddElement({}){
 
 export function Bin(){
     return(
-        <div className="absolute bottom-0 right-0 text-white hover:text-red-700">
+        <div className="absolute bottom-[90px] right-0 text-white hover:text-red-700">
             <Droppable droppableId="Bin">
                 {(provided)=>(
                     <div className="m-3 p-3" {...provided.droppableProps} ref={provided.innerRef}>
@@ -142,3 +147,34 @@ export function Bin(){
         </div>
     )
 }
+
+export function AddSegment(){
+    
+    const change = useContext(SocketContext);
+    const setAudioBoard = useSetRecoilState(audioBoardAtom);
+
+    function handleClick(){
+        setAudioBoard((prev)=>{
+            change([...prev, []]);
+            return [...prev, []]
+        });
+    }
+
+    return(
+        <div className="w-fit m-2">
+        <div className="text-white p-2 font-mono">Add Section</div>
+        <div className="w-[118.53px] h-[118.53px] rounded-md bg-[#181A1C] flex flex-col justify-center items-center">
+            <button onClick={handleClick}>
+                <Icons who='Add' />
+            </button>
+        </div>
+        </div>
+    )
+}
+
+<div className="flex flex-col justify-center items-center w-fit m-2">
+<div className="text-white p-2 font-mono invisible">SECTION-{+1}</div>
+<div className="w-[118.53px] h-[118.53px] rounded-md bg-[#181A1C] flex flex-col justify-center items-center">
+    <button><Icons who='Add' /></button>
+</div>
+</div>

@@ -4,6 +4,7 @@ import { io } from 'socket.io-client';
 import { audioBoardAtom, collaboratorsAtom, loadingAtom } from './recoilStore';
 
 const socket = io('http://localhost:3000');
+// const socket = io('https://soundverse-task.onrender.com/');
 
 export const SocketContext = createContext();
 
